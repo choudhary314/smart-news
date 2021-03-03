@@ -42,15 +42,15 @@ def rss_parser(url):
         entries.append(ent)
 
 
-def store():
+def store_finance():
     dup_cache = []
     fil_coll = []
-    with open("/var/www/html/feeds.csv") as csv_file:
+    with open("feeds.csv") as csv_file:
         feeds = csv.reader(csv_file)
         for feed in feeds:
             rss_parser(feed[0])
     for entry in entries:
-        for i in trigger_normalizer("/var/www/html/triggers.csv"):
+        for i in trigger_normalizer("triggers.csv"):
             if i in entry.title:
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
@@ -60,11 +60,36 @@ def store():
                     entry.trigger = (str(i)).title()
                     filtered = RSS(entry.title, entry.link, entry.trigger)
                     fil_coll.append(filtered)
-    with open("/var/www/html/news.pkl", "wb") as d:
-        pickle.dump(fil_coll, open("/var/www/html/news.pkl", "wb"))
-        print("data dumped, triggers synced")
+    with open("news.pkl", "wb") as d:
+        pickle.dump(fil_coll, open("news.pkl", "wb"))
+        print("data dumped, finance triggers synced")
+        d.close()
+
+
+def store_crypto():
+    dup_cache = []
+    fil_coll = []
+    with open("feeds.csv") as csv_file:
+        feeds = csv.reader(csv_file)
+        for feed in feeds:
+            rss_parser(feed[0])
+    for entry in entries:
+        for i in trigger_normalizer("triggers-crypto.csv"):
+            if i in entry.title:
+                if (
+                    str((hashlib.md5(entry.title.encode())).hexdigest())
+                    not in dup_cache
+                ):
+                    dup_cache.append((hashlib.md5(entry.title.encode())).hexdigest())
+                    entry.trigger = (str(i)).title()
+                    filtered = RSS(entry.title, entry.link, entry.trigger)
+                    fil_coll.append(filtered)
+    with open("news-crypto.pkl", "wb") as d:
+        pickle.dump(fil_coll, open("news-crypto.pkl", "wb"))
+        print("data dumped, crypto triggers synced")
         d.close()
 
 
 if __name__ == "__main__":
-    store()
+    store_finance()
+    store_crypto()

@@ -3,7 +3,7 @@ from flask import Flask, render_template
 
 
 entries = []
-app = Flask(__name__, static_folder="/var/www/html/static")
+app = Flask(__name__, static_folder="C:\\Users\\tarun\\PycharmProjects\\smart_news\\static")
 
 
 class RSS:
@@ -14,7 +14,14 @@ class RSS:
 
 
 def main():
-    with open("/var/www/html/news.pkl", "rb") as f:
+    with open("news.pkl", "rb") as f:
+        news = pickle.load(f)
+        f.close()
+    return news
+
+
+def crypto():
+    with open("news-crypto.pkl", "rb") as f:
         news = pickle.load(f)
         f.close()
     return news
@@ -23,6 +30,16 @@ def main():
 @app.route("/")
 def index():
     return render_template("index.html", foobar=main())
+
+
+@app.route("/cryptocurrency")
+def cryptocurrency():
+    return render_template("crypto.html", foobar=crypto())
+
+
+@app.route("/comingsoon")
+def comingsoon():
+    return render_template("coming.html")
 
 
 if __name__ == "__main__":
