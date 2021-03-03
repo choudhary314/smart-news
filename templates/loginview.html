@@ -1,140 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<style>
-body{
-      background-color:#000000;
-      margin-top:0px;
-      margin-left:0px;
-   }
-ul li{
- font-size:1vw;
- color: white;
+  <style>
+    body {
+      background-color: #000000;
+      margin-top: 0px;
+      margin-left: 0px;
+    }
 
-}
-.bkg {
-    position:fixed;
-    z-index: -1;
-    left: 50%;
-    right:50%;
-    top: 15%;
-    transform: translate(-50%, -50%);
-}
-.box {
-    position: fixed;
-    background-color: #2672EC;
-}
-.bottom {
-    position: fixed;
-    bottom: 5%;
-    right: 0;
-}
-.center {
-    margin-left: auto;
-    margin-right: auto;
-    display: block
-}
-.topnav {
-  position: relative;
-  background-color: #333;
-  overflow: hidden;
-}
+    ul li {
+      font-size: 1vw;
+      color: white;
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
+    }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
+    .bkg {
+      position: fixed;
+      z-index: -1;
+      left: 50%;
+      right: 50%;
+      top: 15%;
+      transform: translate(-50%, -50%);
+    }
 
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #000000;
-  color: white;
-}
+    .box {
+      position: fixed;
+      background-color: #2672EC;
+    }
 
-/* Centered section inside the top navigation */
-.topnav-centered a {
-  float: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+    .bottom {
+      position: fixed;
+      bottom: 5%;
+      right: 0;
+    }
 
-/* Right-aligned section inside the top navigation */
-.topnav-right {
-  float: right;
-}
+    .center {
+      margin-left: auto;
+      margin-right: auto;
+      display: block
+    }
 
-/* Responsive navigation menu - display links on top of each other instead of next to each other (for mobile devices) */
-@media screen and (max-width: 600px) {
-  .topnav a, .topnav-right {
-    float: none;
-    display: block;
-  }
+    .topnav {
+      position: relative;
+      background-color: #333;
+      overflow: hidden;
+    }
 
-  .topnav-centered a {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-  }
-}
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
 
-</style>
-<title>Smart Market News</title>
- <meta http-equiv="refresh" content="5" >
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #000000;
+      color: white;
+    }
+
+    /* Centered section inside the top navigation */
+    .topnav-centered a {
+      float: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
+
+    /* Responsive navigation menu - display links on top of each other instead of next to each other (for mobile devices) */
+    @media screen and (max-width: 600px) {
+
+      .topnav a,
+      .topnav-right {
+        float: none;
+        display: block;
+      }
+
+      .topnav-centered a {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+      }
+    }
+  </style>
+  <title>Smart Market News</title>
+  <meta http-equiv="refresh" content="5">
 </head>
+
 <body>
-<img width="250px" class="bkg" src="/static/bkg.gif" alt="background"/>
-<div class="topnav">
+  <img width="250px" class="bkg" src="/static/bkg.gif" alt="background" />
+  <div class="topnav">
 
-  <!-- Centered link -->
-  <div class="topnav-centered">
-    <a href="#Smart News" class="active">Login</a>
-  </div>
+    <!-- Centered link -->
+    <div class="topnav-centered">
+      <a href="#Smart News" class="active">Login</a>
+    </div>
 
-  <!-- Left-aligned links (default) -->
-  <a href="/comingsoon">Coming Soon</a>
+    <!-- Left-aligned links (default) -->
+    <a href="/comingsoon">Coming Soon</a>
     <a href="/cryptocurrency">Cryptocurrency</a>
-        <a href="/">Finance</a>
+    <a href="/">Finance</a>
 
-  <!-- Right-aligned links -->
-  <div class="topnav-right">
-<!--    <a href="#Search">Search</a>-->
-    <a href="/">Back</a>
+    <!-- Right-aligned links -->
+    <div class="topnav-right">
+      <!--    <a href="#Search">Search</a>-->
+      <a href="/">Back</a>
       <a href="https://www.linkedin.com/in/tarunchoudhary7/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+    </div>
   </div>
-</div>
-<img width="350px" src="/static/icon.gif" width=400px class="center" alt="background"/>
-</br>
-</br>
-</br>
-<h1 style="color:white; text-align:center"> Coming Soon!
-</h1>
-</br>
-</br>
-</br>
-<a href="https://www.linkedin.com/in/tarunchoudhary7/" target="_blank" rel="noopener noreferrer" class="active">
-    <img width="250px" class="center" src="/static/aboutme.gif" width=400px class="center" alt="background"/> </a>
-<!-- <article class="box" ><span class="bottom">Designed by Tarun Choudhary</span>-->
-<!--    </article>-->
+  <img width="350px" src="/static/icon.gif" width=400px class="center" alt="background" />
+  </br>
+  </br>
+  </br>
+  <h1 style="color:white; text-align:center"> Coming Soon!
+  </h1>
+  </br>
+  </br>
+  </br>
+  <a href="https://www.linkedin.com/in/tarunchoudhary7/" target="_blank" rel="noopener noreferrer" class="active">
+    <img width="250px" class="center" src="/static/aboutme.gif" width=400px class="center" alt="background" /> </a>
+  <!-- <article class="box" ><span class="bottom">Designed by Tarun Choudhary</span>-->
+  <!--    </article>-->
 
-<div class="bottom">
+  <div class="bottom">
     <a href="https://www.linkedin.com/in/tarunchoudhary7/" target="_blank" rel="noopener noreferrer" class="active">
-        <img class="bottom" width="150px" src="/static/bottom3.gif" width=400px class="center" alt="background"/>
-        </a>
-</div>
+      <img class="bottom" width="150px" src="/static/bottom3.gif" width=400px class="center" alt="background" />
+    </a>
+  </div>
 
 </body>
+
 </html>

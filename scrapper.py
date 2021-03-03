@@ -3,7 +3,8 @@ from flask import Flask, render_template
 
 
 entries = []
-app = Flask(__name__, static_folder="C:\\Users\\tarun\\PycharmProjects\\smart_news\\static")
+app = Flask(
+    __name__, static_folder="C:\\Users\\tarun\\PycharmProjects\\smart_news\\static")
 
 
 class RSS:
@@ -45,7 +46,6 @@ def comingsoon():
 @app.route("/login")
 def login():
     return render_template("loginview.html")
-
 
 
 if __name__ == "__main__":

@@ -56,7 +56,8 @@ def store_finance():
                     str((hashlib.md5(entry.title.encode())).hexdigest())
                     not in dup_cache
                 ):
-                    dup_cache.append((hashlib.md5(entry.title.encode())).hexdigest())
+                    dup_cache.append(
+                        (hashlib.md5(entry.title.encode())).hexdigest())
                     entry.trigger = (str(i)).title()
                     filtered = RSS(entry.title, entry.link, entry.trigger)
                     fil_coll.append(filtered)
@@ -80,7 +81,8 @@ def store_crypto():
                     str((hashlib.md5(entry.title.encode())).hexdigest())
                     not in dup_cache
                 ):
-                    dup_cache.append((hashlib.md5(entry.title.encode())).hexdigest())
+                    dup_cache.append(
+                        (hashlib.md5(entry.title.encode())).hexdigest())
                     entry.trigger = (str(i)).title()
                     filtered = RSS(entry.title, entry.link, entry.trigger)
                     fil_coll.append(filtered)
