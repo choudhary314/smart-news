@@ -111,7 +111,7 @@
   <meta name="description" content="Smart Market News">
 </head>
 
-<body onload = "JavaScript:AutoRefresh(5000);">
+<body>
   <img width="250px" class="bkg" src="/static/bkg.gif" alt="background" />
   <div class="topnav">
 
@@ -132,7 +132,7 @@
     </div>
   </div>
   <img width="350px" src="/static/icon.gif" width=400px class="center" alt="background" />
-  <ul>
+  <ul onload = "JavaScript:AutoRefresh(5000);">
     {% for thing in foobar %}
     <li>{{thing.trigger}}
       <ol>
