@@ -76,7 +76,7 @@ def store_crypto():
             rss_parser(feed[0])
     for entry in entries:
         for i in trigger_normalizer("triggers-crypto.csv"):
-            if i in entry.title:
+            if i in list(entry.title).split(' '):
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
                     not in dup_cache
