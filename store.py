@@ -84,7 +84,6 @@ def store_crypto():
                     dup_cache.append(
                         (hashlib.md5(entry.title.encode())).hexdigest())
                     entry.trigger = (str(i)).title()
-                    print(entry.title)
                     filtered = RSS(entry.title, entry.link, entry.trigger)
                     fil_coll.append(filtered)
     with open("news-crypto.pkl", "wb") as d:
