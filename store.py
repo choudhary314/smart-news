@@ -51,7 +51,7 @@ def store_finance():
             rss_parser(feed[0])
     for entry in entries:
         for i in trigger_normalizer("triggers.csv"):
-            if i in entry.title:
+            if i in (entry.title).split():
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
                     not in dup_cache
@@ -76,7 +76,7 @@ def store_crypto():
             rss_parser(feed[0])
     for entry in entries:
         for i in trigger_normalizer("triggers-crypto.csv"):
-            if i in entry.title:
+            if i in (entry.title).split():
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
                     not in dup_cache
@@ -84,6 +84,7 @@ def store_crypto():
                     dup_cache.append(
                         (hashlib.md5(entry.title.encode())).hexdigest())
                     entry.trigger = (str(i)).title()
+                    print(entry.title)
                     filtered = RSS(entry.title, entry.link, entry.trigger)
                     fil_coll.append(filtered)
     with open("news-crypto.pkl", "wb") as d:
