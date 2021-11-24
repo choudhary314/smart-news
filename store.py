@@ -34,7 +34,7 @@ def trigger_normalizer(file):
 
 def rss_parser(url):
     data = feedparser.parse(url)
-    print("this url is", url)
+    # print("this url is", url)
     for i in range(len(data.entries)):
         try:
             ent = RSS(data.entries[i].title, data.entries[i].link)
