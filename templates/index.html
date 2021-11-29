@@ -20,7 +20,7 @@
     }
 
     ul li {
-      font-size: 1vw;
+      font-size: auto;
       color: white;
 
     }
@@ -64,7 +64,7 @@
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
-      font-size: 17px;
+      font-size: auto;
     }
 
     /* Change the color of links on hover */
@@ -137,7 +137,7 @@
     {% for thing in foobar %}
     <li>{{thing.trigger}}
       <ol>
-        <a style="font-size:1vw; color: white;" href={{ thing.link}} target="_blank" rel="noopener noreferrer">{{
+        <a style="font-size:auto; color: white;" href={{ thing.link}} target="_blank" rel="noopener noreferrer">{{
           thing.title}}</a>
       </ol>
     </li>
