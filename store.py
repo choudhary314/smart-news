@@ -2,10 +2,11 @@ import feedparser
 import csv
 import hashlib
 import pickle
+from os import getcwd
 
 entries = []
 
-
+cwd = getcwd()
 class RSS:
     def __init__(self, title, link, trigger="none"):
         self.title = title
@@ -46,12 +47,12 @@ def rss_parser(url):
 def store_finance():
     dup_cache = []
     fil_coll = []
-    with open("/var/www/html/feeds.csv") as csv_file:
+    with open(cwd + "/feeds.csv") as csv_file:
         feeds = csv.reader(csv_file)
         for feed in feeds:
             rss_parser(feed[0])
     for entry in entries:
-        for i in trigger_normalizer("/var/www/html/triggers.csv"):
+        for i in trigger_normalizer(cwd + "/triggers.csv"):
             if i in (entry.title).split():
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
@@ -62,8 +63,8 @@ def store_finance():
                     entry.trigger = (str(i)).title()
                     filtered = RSS(entry.title, entry.link, entry.trigger)
                     fil_coll.append(filtered)
-    with open("/var/www/html/news.pkl", "wb") as d:
-        pickle.dump(fil_coll, open("/var/www/html/news.pkl", "wb"))
+    with open(cwd + "/news.pkl", "wb") as d:
+        pickle.dump(fil_coll, open(cwd + "/news.pkl", "wb"))
         print("data dumped, finance triggers synced")
         d.close()
 
@@ -71,12 +72,12 @@ def store_finance():
 def store_crypto():
     dup_cache = []
     fil_coll = []
-    with open("/var/www/html/feeds.csv") as csv_file:
+    with open(cwd + "/feeds.csv") as csv_file:
         feeds = csv.reader(csv_file)
         for feed in feeds:
             rss_parser(feed[0])
     for entry in entries:
-        for i in trigger_normalizer("/var/www/html/triggers-crypto.csv"):
+        for i in trigger_normalizer(cwd + "/triggers-crypto.csv"):
             if i in (entry.title).split():
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
@@ -87,8 +88,8 @@ def store_crypto():
                     entry.trigger = (str(i)).title()
                     filtered = RSS(entry.title, entry.link, entry.trigger)
                     fil_coll.append(filtered)
-    with open("/var/www/html/news-crypto.pkl", "wb") as d:
-        pickle.dump(fil_coll, open("/var/www/html/news-crypto.pkl", "wb"))
+    with open(cwd + "/news-crypto.pkl", "wb") as d:
+        pickle.dump(fil_coll, open(cwd + "/news-crypto.pkl", "wb"))
         print("data dumped, crypto triggers synced")
         d.close()
 
