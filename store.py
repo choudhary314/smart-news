@@ -1,6 +1,7 @@
 """
 Parses through all the different RSS feeds stored in feeds.csv and looks for articles matching triggers
 in triggers.csv for finance news and then triggers-crypto.csv for crypto news articles. Eventually the matches are stores in a pickled file.
+This is run as a scheduled task on the server to keep the news current.
 """
 import feedparser
 import csv
@@ -57,7 +58,10 @@ def rss_parser(url):
 
 
 def store_finance():
-    """creates the pickle file of the finance articles after finding the match"""
+    """
+    Creates the pickle file of the finance articles after finding the match
+    Note: The absolute paths need to be converted to relative paths using flask environment variables
+    """
     dup_cache = []
     fil_coll = []
     with open("/var/www/html/feeds.csv") as csv_file:
@@ -83,7 +87,10 @@ def store_finance():
 
 
 def store_crypto():
-    """creates the crypto news related pickle file after finding the match"""
+    """
+    Creates the crypto news related pickle file after finding the match
+    Note: The absolute paths need to be converted to relative paths using flask environment variables
+    """
     dup_cache = []
     fil_coll = []
     with open("/var/www/html/feeds.csv") as csv_file:
