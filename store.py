@@ -7,10 +7,12 @@ import feedparser
 import csv
 import hashlib
 import pickle
+import os
 from logger import setup_custom_logger
 
 entries = []
 log = setup_custom_logger(__file__)
+script_dir = os.path.dirname(__file__)
 
 
 class RSS:
@@ -24,26 +26,15 @@ class RSS:
         self.trigger = trigger
 
 
-def feed_urls(file):
-    try:
-        with open(file) as csv_file:
-            collection = csv.reader(csv_file)
-            return collection
-    except Exception as err:
-        log.error(f"Issue reading the feeds file: {err}")
-        raise
-
-
 def trigger_normalizer(file):
     """
     This is used to load all the trigger words from triggers.csv and add to normalized array.
     """
     normalized = []
     try:
-        with open(file) as csv_file:
-            triggers = csv.reader(csv_file)
+        with open(file) as triggers_file:
+            triggers = triggers_file.readlines()
             for trigger in triggers:
-                trigger = str(trigger[0])
                 normalized.append(trigger.lower())
             return normalized
     except Exception as err:
@@ -52,6 +43,9 @@ def trigger_normalizer(file):
 
 
 def rss_parser(url):
+    """
+    Parses through all the rss feed urls stores them in entries as RSS class objects.
+    """
     try:
         data = feedparser.parse(url)
         for i in range(len(data.entries)):
@@ -75,14 +69,17 @@ def store_finance():
     dup_cache = []
     fil_coll = []
     log.info("Finance triggers sync started")
+    triggers_path = os.path.join(script_dir, "triggers")
+    feeds_path = os.path.join(script_dir, "feeds")
+    pkl_path = os.path.join(script_dir, "news.pkl")
     try:
-        with open("/var/www/html/feeds.csv") as csv_file:
-            feeds = csv.reader(csv_file)
+        with open(feeds_path) as feeds_file:
+            feeds = feeds_file.readlines()
             for feed in feeds:
-                rss_parser(feed[0])
+                rss_parser(feed)
             for entry in entries:
                 """This is a brute force way, this can be optimized further by not looping through twice. Work in progress"""
-                for i in trigger_normalizer("/var/www/html/triggers.csv"):
+                for i in trigger_normalizer(triggers_path):
                     if i in ((entry.title).lower()).split():
                         if (
                             str((hashlib.md5(entry.title.encode())).hexdigest())
@@ -98,8 +95,8 @@ def store_finance():
         log.error(f"feeds file not found for store_finance: {err}")
         raise
     try:
-        with open("/var/www/html/news.pkl", "wb") as d:
-            pickle.dump(fil_coll, open("/var/www/html/news.pkl", "wb"))
+        with open(pkl_path, "wb") as d:
+            pickle.dump(fil_coll, open(pkl_path, "wb"))
             log.info("Data dumped in news.pkl, finance triggers synced")
     except Exception as err:
         log.error(f"Pickle file dump for finance errored out: {err}")
@@ -114,13 +111,16 @@ def store_crypto():
     dup_cache = []
     fil_coll = []
     log.info("Crypto triggers sync started")
+    crypto_triggers_path = os.path.join(script_dir, "triggers-crypto")
+    feeds_path = os.path.join(script_dir, "feeds")
+    crypto_pkl_path = os.path.join(script_dir, "news-crypto.pkl")
     try:
-        with open("/var/www/html/feeds.csv") as csv_file:
-            feeds = csv.reader(csv_file)
+        with open(feeds_path) as feeds_file:
+            feeds = feeds_file.readlines()
             for feed in feeds:
-                rss_parser(feed[0])
+                rss_parser(feed)
             for entry in entries:
-                for i in trigger_normalizer("/var/www/html/triggers-crypto.csv"):
+                for i in trigger_normalizer(crypto_triggers_path):
                     if i in ((entry.title).lower()).split():
                         if (
                             str((hashlib.md5(entry.title.encode())).hexdigest())
@@ -136,8 +136,8 @@ def store_crypto():
         log.error(f"feeds file not found for store_finance: {err}")
         raise
     try:
-        with open("/var/www/html/news-crypto.pkl", "wb") as d:
-            pickle.dump(fil_coll, open("/var/www/html/news-crypto.pkl", "wb"))
+        with open(crypto_pkl_path, "wb") as d:
+            pickle.dump(fil_coll, open(crypto_pkl_path, "wb"))
             log.info("Data dumped in news-crypto.pkl, crypto triggers synced")
     except Exception as err:
         log.error(f"Pickle file dump for crypto errored out: {err}")
