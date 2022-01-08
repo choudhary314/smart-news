@@ -10,6 +10,9 @@
       - Monitored through my Nagios core server
       - Served using gunicorn NGINX workers
       - Running on LXC containers (redundant pairs) -- Soon to be moved to a auto-scaling K8s cluster
+    - Improvement
+      - Switch from pickle and csv files to a SQLLite DB with SQLAlchemy and Marshmallow models
+      - In addition to local logs push the logs to logstash instance
     - Feature roadmap
       - Sentimental Analysis
       - Ticker Prices
