@@ -1,17 +1,14 @@
 """
 Parses through all the different RSS feeds stored in feeds.csv and looks for articles matching triggers
 in triggers.csv for finance news and then triggers-crypto.csv for crypto news articles. Eventually the matches are stores in a pickled file.
-This is run as a scheduled task on the server to keep the news current.
+This needs to run as a scheduled task on the server to keep the news.pkl and news-crypto.pkl latest.
 """
 import feedparser
 import csv
 import hashlib
 import pickle
-from os import getcwd
 
 entries = []
-
-cwd = getcwd()
 
 
 class RSS:
@@ -31,24 +28,19 @@ def feed_urls(file):
 
 def trigger_normalizer(file):
     """
-    This is used to convert all the trigger words into different forms.
-    This can be avoided, instead convert the articles title in lower case before comparing against the trigger.
+    This is used to load all the trigger words from triggers.csv and add to normalized array.
     """
     normalized = []
     with open(file) as csv_file:
         triggers = csv.reader(csv_file)
         for trigger in triggers:
             trigger = str(trigger[0])
-            normalized.append(trigger)
-            normalized.append(trigger.capitalize())
             normalized.append(trigger.lower())
-            normalized.append(trigger.upper())
         return normalized
 
 
 def rss_parser(url):
     data = feedparser.parse(url)
-    # print("this url is", url)
     for i in range(len(data.entries)):
         try:
             ent = RSS(data.entries[i].title, data.entries[i].link)
@@ -71,7 +63,7 @@ def store_finance():
     for entry in entries:
         """This is a brute force way, this can be optimized further by not looping through twice. Work in progress"""
         for i in trigger_normalizer("/var/www/html/triggers.csv"):
-            if i in (entry.title).split():
+            if i in ((entry.title).lower()).split():
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
                     not in dup_cache
@@ -99,7 +91,7 @@ def store_crypto():
             rss_parser(feed[0])
     for entry in entries:
         for i in trigger_normalizer("/var/www/html/triggers-crypto.csv"):
-            if i in (entry.title).split():
+            if i in ((entry.title).lower()).split():
                 if (
                     str((hashlib.md5(entry.title.encode())).hexdigest())
                     not in dup_cache
@@ -116,4 +108,3 @@ def store_crypto():
 
 if __name__ == "__main__":
     store_finance()
-    store_crypto()
