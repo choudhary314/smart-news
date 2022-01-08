@@ -32,9 +32,10 @@ def trigger_normalizer(file):
     """
     normalized = []
     try:
-        with open(file) as triggers_file:
-            triggers = triggers_file.readlines()
+        with open(file) as csv_file:
+            triggers = csv.reader(csv_file)
             for trigger in triggers:
+                trigger = str(trigger[0])
                 normalized.append(trigger.lower())
             return normalized
     except Exception as err:
@@ -69,14 +70,14 @@ def store_finance():
     dup_cache = []
     fil_coll = []
     log.info("Finance triggers sync started")
-    triggers_path = os.path.join(script_dir, "triggers")
-    feeds_path = os.path.join(script_dir, "feeds")
+    triggers_path = os.path.join(script_dir, "triggers.csv")
+    feeds_path = os.path.join(script_dir, "feeds.csv")
     pkl_path = os.path.join(script_dir, "news.pkl")
     try:
-        with open(feeds_path) as feeds_file:
-            feeds = feeds_file.readlines()
+        with open(feeds_path) as csv_file:
+            feeds = csv.reader(csv_file)
             for feed in feeds:
-                rss_parser(feed)
+                rss_parser(feed[0])
             for entry in entries:
                 """This is a brute force way, this can be optimized further by not looping through twice. Work in progress"""
                 for i in trigger_normalizer(triggers_path):
@@ -111,14 +112,14 @@ def store_crypto():
     dup_cache = []
     fil_coll = []
     log.info("Crypto triggers sync started")
-    crypto_triggers_path = os.path.join(script_dir, "triggers-crypto")
-    feeds_path = os.path.join(script_dir, "feeds")
+    crypto_triggers_path = os.path.join(script_dir, "triggers-crypto.csv")
+    feeds_path = os.path.join(script_dir, "feeds.csv")
     crypto_pkl_path = os.path.join(script_dir, "news-crypto.pkl")
     try:
-        with open(feeds_path) as feeds_file:
-            feeds = feeds_file.readlines()
+        with open(feeds_path) as csv_file:
+            feeds = csv.reader(csv_file)
             for feed in feeds:
-                rss_parser(feed)
+                rss_parser(feed[0])
             for entry in entries:
                 for i in trigger_normalizer(crypto_triggers_path):
                     if i in ((entry.title).lower()).split():
