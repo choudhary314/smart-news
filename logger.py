@@ -1,4 +1,3 @@
-from io import TextIOBase
 import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
