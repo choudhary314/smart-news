@@ -108,3 +108,4 @@ def store_crypto():
 
 if __name__ == "__main__":
     store_finance()
+    store_crypto()
