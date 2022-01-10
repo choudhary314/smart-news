@@ -6,7 +6,7 @@
   - Features to be added:
     - Infrastructure:
       - Hosted on my home lab server
-      - Hosted behind a HA reverse proxy (https://github.com/choudhary314/haproxy-configs/blob/main/haproxy.cfg) (Note: Usually served by a two back-end servers, currently only one is being used due to a problem with gunicorn on my second server)
+      - Hosted behind a HA reverse proxy (https://github.com/choudhary314/haproxy-configs/blob/main/haproxy.cfg)
       - Monitored through my Nagios core server
       - Served using gunicorn NGINX workers
       - Running on LXC containers (redundant pairs) -- Soon to be moved to a auto-scaling K8s cluster
