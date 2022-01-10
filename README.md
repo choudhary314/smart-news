@@ -20,4 +20,4 @@
       - Personalized Views
       - Currently the trigger search words are governed by https://github.com/choudhary314/smart-news/blob/master/triggers.csv and https://github.com/choudhary314/smart-news/blob/master/triggers-crypto.csv
     - Requirements:
-      - Please see environment.yml for pip packages required. if using conda, conda virtual environment can be created by running 'conda env create -f environment.yml' using the environment.yml in this repository
+      - Please see environment.yml for python packages required. if using conda, conda virtual environment can be created by running 'conda env create -f environment.yml' using the environment.yml in this repository
