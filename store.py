@@ -1,5 +1,5 @@
 """
-Parses through all the different RSS feeds stored in feeds.csv and looks for articles matching triggers
+Parses through all the different Rss feeds stored in feeds.csv and looks for articles matching triggers
 in triggers.csv for finance news and then triggers-crypto.csv for crypto news articles. Eventually the matches are stores in a pickled file.
 This needs to run as a scheduled task on the server to keep the news.pkl and news-crypto.pkl latest.
 """
@@ -15,7 +15,7 @@ log = setup_custom_logger(__file__)
 script_dir = os.path.dirname(__file__)
 
 
-class RSS:
+class Rss:
     """
     Class to store the attributes of the articles, and then pickle them
     """
@@ -45,13 +45,13 @@ def trigger_normalizer(file):
 
 def rss_parser(url):
     """
-    Parses through all the rss feed urls stores them in entries as RSS class objects.
+    Parses through all the rss feed urls stores them in entries as Rss class objects.
     """
     try:
         data = feedparser.parse(url)
         for i in range(len(data.entries)):
             try:
-                ent = RSS(data.entries[i].title, data.entries[i].link)
+                ent = Rss(data.entries[i].title, data.entries[i].link)
                 entries.append(ent)
             except Exception as err:
                 log.warning(
@@ -90,7 +90,7 @@ def store_finance():
                                 (hashlib.md5(entry.title.encode())).hexdigest()
                             )
                             entry.trigger = (str(i)).title()
-                            filtered = RSS(entry.title, entry.link, entry.trigger)
+                            filtered = Rss(entry.title, entry.link, entry.trigger)
                             fil_coll.append(filtered)
     except Exception as err:
         log.error(f"feeds file not found for store_finance: {err}")
@@ -131,7 +131,7 @@ def store_crypto():
                                 (hashlib.md5(entry.title.encode())).hexdigest()
                             )
                             entry.trigger = (str(i)).title()
-                            filtered = RSS(entry.title, entry.link, entry.trigger)
+                            filtered = Rss(entry.title, entry.link, entry.trigger)
                             fil_coll.append(filtered)
     except Exception as err:
         log.error(f"feeds file not found for store_finance: {err}")

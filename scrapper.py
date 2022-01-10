@@ -4,12 +4,13 @@ This is the entry point into the app, serves the webpage instance by unpickling 
 import pickle
 import os
 from flask import Flask, render_template
+from logger import setup_custom_logger
 
-entries = []
+log = setup_custom_logger(__file__)
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), "static"))
 
 
-class RSS:
+class Rss:
     def __init__(self, title, link, trigger="none"):
         self.title = title
         self.link = link
@@ -17,39 +18,79 @@ class RSS:
 
 
 def main():
-    with open("news.pkl", "rb") as f:
-        news = pickle.load(f)
-        f.close()
+    """
+    Unpickles the finance-news Rss objects
+    """
+    try:
+        with open("news.pkl", "rb") as f:
+            news = pickle.load(f)
+            f.close()
+    except Exception as err:
+        log.error(f"news.pkl could't be unpicked: {err}")
     return news
 
 
 def crypto():
-    with open("news-crypto.pkl", "rb") as f:
-        news = pickle.load(f)
-        f.close()
-    return news
+    """
+    Unpickles the cryptocurrency-news Rss objects
+    """
+    try:
+        with open("news-crypto.pkl", "rb") as f:
+            crypto_news = pickle.load(f)
+            f.close()
+
+    except Exception as err:
+        log.error(f"news-crypto.pkl unpickling error'd out: {err}")
+    return crypto_news
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", foobar=main())
+    """
+    Serves the finance/landing page
+    """
+    try:
+        return render_template("index.html", foobar=main())
+    except Exception as err:
+        log.error(f"couldn't render the finance/landing page: {err}")
 
 
 @app.route("/cryptocurrency")
 def cryptocurrency():
-    return render_template("crypto.html", foobar=crypto())
+    """
+    Serves the crptocurrency page
+    """
+    try:
+        return render_template("crypto.html", foobar=crypto())
+    except Exception as err:
+        log.error(f"couldn't render the crypto page: {err}")
 
 
 @app.route("/comingsoon")
 def comingsoon():
-    return render_template("coming.html")
+    """
+    Serves the commingsoon page
+    """
+    try:
+        return render_template("coming.html")
+    except Exception as err:
+        log.error(f"couldn't render the coming soon page: {err}")
 
 
 @app.route("/login")
 def login():
-    return render_template("loginview.html")
+    """
+    Serves the login page
+    """
+    try:
+        return render_template("loginview.html")
+    except Exception as err:
+        log.error(f"couldn't render the login page: {err}")
 
 
 if __name__ == "__main__":
-    app.jinja_env.cache = {}
-    app.run(debug=True, host="127.0.0.1", port=5000, threaded=True)
+    try:
+        app.jinja_env.cache = {}
+        app.run(debug=True, host="127.0.0.1", port=5000, threaded=True)
+    except Exception as err:
+        log.error(f"flask app errored out with: {err}")
